@@ -1,0 +1,12 @@
+
+# compile package 
+
+'''
+make package/ipalive/compile V=s
+'''
+
+# install package
+
+'''
+opkg install /path/to/ipalive.ip
+'''

